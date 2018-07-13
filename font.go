@@ -74,7 +74,7 @@ func (f *Font) UpdateResolution(windowWidth int, windowHeight int) {
 }
 
 //Printf draws a string to the screen, takes a list of arguments like printf
-func (f *Font) Printf(x, y float32, scale float32, align int32, fs string, argv ...interface{}) error {
+func (f *Font) Printf(x, y float32, scale float32, align int32, blend bool, fs string, argv ...interface{}) error {
 
 	indices := []rune(fmt.Sprintf(fs, argv...))
 
@@ -86,7 +86,9 @@ func (f *Font) Printf(x, y float32, scale float32, align int32, fs string, argv 
 
 	//setup blending mode
 	gl.Enable(gl.BLEND)
-	gl.BlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
+	if blend {
+		gl.BlendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA)
+	}
 
 	// Activate corresponding render state
 	gl.UseProgram(f.program)
