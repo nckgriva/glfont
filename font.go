@@ -101,9 +101,9 @@ func (f *Font) Printf(x, y float32, scale float32, align int32, fs string, argv 
 
 	//calculate alignment position
 	if align == 0 {
-		x -= float32(f.Width(scale, fs)) * 0.5
+		x -= f.Width(scale, fs) * 0.5
 	} else if align < 0 {
-		x -= float32(f.Width(scale, fs))
+		x -= f.Width(scale, fs)
 	}
 
 	// Iterate through all characters in string
