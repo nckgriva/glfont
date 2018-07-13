@@ -74,7 +74,7 @@ func (f *Font) UpdateResolution(windowWidth int, windowHeight int) {
 }
 
 //Printf draws a string to the screen, takes a list of arguments like printf
-func (f *Font) Printf(x, y float32, scale float32, fs string, argv ...interface{}) error {
+func (f *Font) Printf(x, y float32, scale float32, align int32, fs string, argv ...interface{}) error {
 
 	indices := []rune(fmt.Sprintf(fs, argv...))
 
@@ -98,6 +98,13 @@ func (f *Font) Printf(x, y float32, scale float32, fs string, argv ...interface{
 
 	gl.ActiveTexture(gl.TEXTURE0)
 	gl.BindVertexArray(f.vao)
+
+	//calculate alignment position
+	if align == 0 {
+		x -= float32(f.Width(scale, fs)) * 0.5
+	} else if align < 0 {
+		x -= float32(f.Width(scale, fs))
+	}
 
 	// Iterate through all characters in string
 	for i := range indices {
